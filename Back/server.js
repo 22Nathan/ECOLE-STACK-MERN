@@ -19,7 +19,9 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology:
   })
 
 const produitsRouter = require('./routes/produits')
-app.use('/produits', produitsRouter)
+const personnesRouter = require('./routes/personnes')
+app.use('/produits' , produitsRouter)
+app.use('/personnes', personnesRouter)
 
 app.use(express.static(path.join(__dirname, '../Front/ligueSportive', 'dist')))
 app.get('*', (req, res) => { res.sendFile(path.join(__dirname, '../Front/ligueSportive', 'dist', 'index.html')) })

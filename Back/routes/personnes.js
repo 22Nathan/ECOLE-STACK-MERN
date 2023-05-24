@@ -1,10 +1,12 @@
+
+
+
 const express = require('express')
 const router = express.Router()
 const Personne = require('../models/personnes')
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // MIDDLEWARE GET BY ID
-
 async function getPersonne(req, res, next){
     let personne
     try {
@@ -19,13 +21,30 @@ async function getPersonne(req, res, next){
     next()
 }
 
+// <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+// MIDDLEWARE GET BY MAIL & PWD
+async function getPersonneMailPwd(req, res, next){
+    let personne
+    try {
+        personne = await Personne.findOne({ mail: req.params.mail , mdp: req.params.mdp })
+        if (personne == null) {
+            return res.status(404).json({ message: 'Personne introuvable' })
+        }
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+    res.personne = personne
+    next()
+}
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-// GET ALL ADHERENTS
+// GET ALL
 router.get('/', async (req, res) => {
+    console.log('/')
     try {
-        const adherents = await Personne.find().limit(10)
+        const personnes = await Personne.find().limit(10)
         res.setHeader('Content-Type', 'application/json')
+        res.status(200).json(personnes)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -37,9 +56,14 @@ router.get('/:id', getPersonne, (req, res) => {
     res.json(res.personne)
 })
 
+// <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+// GET ADHERENT BY MAIL & PWD
+router.get('/:mail/:mdp', getPersonneMailPwd, (req, res) => {
+    res.json(res.personne)
+})
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-// CREATE ADHERENT
+// CREATE
 router.post('/', async (req, res) => {
 
     const personne = new Personne({
@@ -60,15 +84,15 @@ router.post('/', async (req, res) => {
 })
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-// UPDATE ADHERENT
+// UPDATE
 
 router.put('/:id', getPersonne, async (req, res) => {
     
     if (req.body.nom != null)       { res.personne.nom = req.body.nom }
-    if (req.body.prenom != null)       { res.personne.prenom = req.body.prenom }
+    if (req.body.prenom != null)    { res.personne.prenom = req.body.prenom }
     if (req.body.telephone != null) { res.personne.telephone = req.body.telephone }
-    if (req.body.mail != null)    { res.personne.mail = req.body.mail }
-    if (req.body.mdp != null)        { res.personne.mdp = req.body.mdp }
+    if (req.body.mail != null)      { res.personne.mail = req.body.mail }
+    if (req.body.mdp != null)       { res.personne.mdp = req.body.mdp }
 
     try {
         const updatedPersonne = await res.personne.save()
