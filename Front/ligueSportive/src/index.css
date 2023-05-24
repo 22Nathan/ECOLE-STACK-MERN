@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body  { @apply overflow-x-hidden min-h-screen scroll-smooth bg-[rgba(27,31,36,1)] text-white }
+input { @apply bg-transparent border border-white/25 rounded-md p-2 }
+.button { @apply items-center justify-center whitespace-nowrap rounded-[5px] sm:px-8 border border-transparent p-[.5rem_1rem] text-center font-medium backdrop-blur-sm transition-[color,background-color,box-shadow,border-color] duration-200 }
+.button-primary { @apply bg-white text-[rgb(5,5,5)] }
+
+#gradient-canvas {
+    width:100vw;
+    height:100vh;
+  --gradient-color-1: #000000;
+  --gradient-color-2: #1a1a1a;
+  --gradient-color-3: #131313;
+  --gradient-color-4: #505050;
+}
