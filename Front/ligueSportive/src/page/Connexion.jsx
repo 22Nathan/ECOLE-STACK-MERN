@@ -17,10 +17,10 @@ function Connexion() {
         event.preventDefault()
     
         try {
-            const response = await fetch('http://localhost:3000/personnes/', {
-                method: 'POST',
+            const response = await fetch(`http://localhost:3000/personnes/${field1}/${field2}`, {
+                method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email:field1 , password:field2 })    
+                // body: JSON.stringify({ email:field1 , password:field2 })    
             })
     
             if (response.ok) {

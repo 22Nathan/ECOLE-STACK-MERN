@@ -22,26 +22,25 @@ async function getPersonne(req, res, next){
 }
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-// GET BY EMAIL + PWD
-router.get('/:mail/:mdp', async (req, res) => {
-    console.log('ff');
+// MIDDLEWARE GET BY MAIL & PWD
+async function getPersonneMailPwd(req, res, next){
     let personne
     try {
         personne = await Personne.findOne({ mail: req.params.mail , mdp: req.params.mdp })
         if (personne == null) {
             return res.status(404).json({ message: 'Personne introuvable' })
         }
-        res.setHeader('Content-Type', 'application/json')
-        res.status(200).json(personne)
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
-})
+    res.personne = personne
+    next()
+}
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // GET ALL
 router.get('/', async (req, res) => {
-    console.log('dd');
+    console.log('/')
     try {
         const personnes = await Personne.find().limit(10)
         res.setHeader('Content-Type', 'application/json')
@@ -54,6 +53,12 @@ router.get('/', async (req, res) => {
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // GET ADHERENT BY ID
 router.get('/:id', getPersonne, (req, res) => {
+    res.json(res.personne)
+})
+
+// <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+// GET ADHERENT BY MAIL & PWD
+router.get('/:mail/:mdp', getPersonneMailPwd, (req, res) => {
     res.json(res.personne)
 })
 
