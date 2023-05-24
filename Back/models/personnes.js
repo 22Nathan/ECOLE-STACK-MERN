@@ -9,6 +9,7 @@ const personneSchema = new mongoose.Schema({
     telephone: { type: String, required: true },
     mail: { type: String, required: true },
     mdp: { type: String, required: true },
+    status: { type: String, required: true }
 })
 
 const Adherent = mongoose.model('Personne', personneSchema, 'Personne')

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Personne = require('../models/personne')
+const Personne = require('../models/personnes')
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // MIDDLEWARE GET BY ID
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // GET ADHERENT BY ID
-router.get('/:id', getAdherent, (req, res) => {
+router.get('/:id', getPersonne, (req, res) => {
     res.json(res.personne)
 })
 
@@ -64,11 +64,11 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', getPersonne, async (req, res) => {
     
-    if (req.body.nom != null)       { res.produit.nom = req.body.nom }
-    if (req.body.prenom != null)       { res.produit.prenom = req.body.prenom }
-    if (req.body.telephone != null) { res.produit.telephone = req.body.telephone }
-    if (req.body.mail != null)    { res.produit.mail = req.body.mail }
-    if (req.body.mdp != null)        { res.produit.mdp = req.body.mdp }
+    if (req.body.nom != null)       { res.personne.nom = req.body.nom }
+    if (req.body.prenom != null)       { res.personne.prenom = req.body.prenom }
+    if (req.body.telephone != null) { res.personne.telephone = req.body.telephone }
+    if (req.body.mail != null)    { res.personne.mail = req.body.mail }
+    if (req.body.mdp != null)        { res.personne.mdp = req.body.mdp }
 
     try {
         const updatedPersonne = await res.personne.save()
@@ -89,3 +89,6 @@ router.delete('/:id', getPersonne, async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
+
+module.exports = router
