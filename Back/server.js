@@ -17,3 +17,9 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology:
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error)
   })
+
+const produitsRouter = require('./routes/produits')
+app.use('/produits', produitsRouter)
+
+app.use(express.static(path.join(__dirname, '../Front/ligueSportive', 'dist')))
+app.get('*', (req, res) => { res.sendFile(path.join(__dirname, '../Front/ligueSportive', 'dist', 'index.html')) })
