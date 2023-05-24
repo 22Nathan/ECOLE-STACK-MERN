@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 body  { @apply overflow-x-hidden min-h-screen scroll-smooth bg-[rgba(27,31,36,1)] text-white }
-input { @apply bg-transparent border border-white/25 rounded-md p-2 }
+input { @apply bg-transparent border border-white/25 rounded-md p-2 duration-200 }
 .button { @apply items-center justify-center whitespace-nowrap rounded-[5px] sm:px-8 border border-transparent p-[.5rem_1rem] text-center font-medium backdrop-blur-sm transition-[color,background-color,box-shadow,border-color] duration-200 }
-.button-primary { @apply bg-white text-[rgb(5,5,5)] }
+.button-primary { @apply bg-white text-[rgb(5,5,5)] duration-200 }
+.button-primary:hover, .hover-box:hover .button-primary { @apply border-white bg-transparent text-white }
+.button-secondary { @apply border border-[rgb(64,64,64)] text-[rgb(163,163,163)] duration-200 }
+.button-secondary:hover, .hover-box:hover .button-secondary { @apply border-white text-white }
 
 #gradient-canvas {
     width:100vw;
