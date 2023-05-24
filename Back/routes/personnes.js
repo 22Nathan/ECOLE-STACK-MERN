@@ -1,10 +1,12 @@
+
+
+
 const express = require('express')
 const router = express.Router()
 const Personne = require('../models/personne')
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // MIDDLEWARE GET BY ID
-
 async function getPersonne(req, res, next){
     let personne
     try {
@@ -19,13 +21,31 @@ async function getPersonne(req, res, next){
     next()
 }
 
+// <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+// GET BY EMAIL + PWD
+router.get('/:mail/:mdp', async (req, res) => {
+    console.log('ff');
+    let personne
+    try {
+        personne = await Personne.findOne({ mail: req.params.mail , mdp: req.params.mdp })
+        if (personne == null) {
+            return res.status(404).json({ message: 'Personne introuvable' })
+        }
+        res.setHeader('Content-Type', 'application/json')
+        res.status(200).json(personne)
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+})
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-// GET ALL ADHERENTS
+// GET ALL
 router.get('/', async (req, res) => {
+    console.log('dd');
     try {
-        const adherents = await Personne.find().limit(10)
+        const personnes = await Personne.find().limit(10)
         res.setHeader('Content-Type', 'application/json')
+        res.status(200).json(personnes)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -33,13 +53,12 @@ router.get('/', async (req, res) => {
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // GET ADHERENT BY ID
-router.get('/:id', getAdherent, (req, res) => {
+router.get('/:id', getPersonne, (req, res) => {
     res.json(res.personne)
 })
 
-
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-// CREATE ADHERENT
+// CREATE
 router.post('/', async (req, res) => {
 
     const personne = new Personne({
@@ -60,15 +79,15 @@ router.post('/', async (req, res) => {
 })
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-// UPDATE ADHERENT
+// UPDATE
 
 router.put('/:id', getPersonne, async (req, res) => {
     
-    if (req.body.nom != null)       { res.produit.nom = req.body.nom }
-    if (req.body.prenom != null)       { res.produit.prenom = req.body.prenom }
-    if (req.body.telephone != null) { res.produit.telephone = req.body.telephone }
-    if (req.body.mail != null)    { res.produit.mail = req.body.mail }
-    if (req.body.mdp != null)        { res.produit.mdp = req.body.mdp }
+    if (req.body.nom != null)       { res.personne.nom = req.body.nom }
+    if (req.body.prenom != null)    { res.personne.prenom = req.body.prenom }
+    if (req.body.telephone != null) { res.personne.telephone = req.body.telephone }
+    if (req.body.mail != null)      { res.personne.mail = req.body.mail }
+    if (req.body.mdp != null)       { res.personne.mdp = req.body.mdp }
 
     try {
         const updatedPersonne = await res.personne.save()
@@ -89,3 +108,6 @@ router.delete('/:id', getPersonne, async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
+
+module.exports = router

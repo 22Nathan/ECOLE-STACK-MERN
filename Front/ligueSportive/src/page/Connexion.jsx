@@ -17,7 +17,7 @@ function Connexion() {
         event.preventDefault()
     
         try {
-            const response = await fetch('http://localhost:3000/movies/', {
+            const response = await fetch('http://localhost:3000/personnes/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email:field1 , password:field2 })    
