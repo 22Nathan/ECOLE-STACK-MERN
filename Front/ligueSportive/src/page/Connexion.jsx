@@ -40,6 +40,7 @@ function Connexion() {
                     nom: res.nom,
                     prenom: res.prenom,
                     mail: res.mail,
+                    admin: res.admin,
                     connected: true
                 })
                 setField1('')

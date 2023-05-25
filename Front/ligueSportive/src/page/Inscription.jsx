@@ -7,6 +7,9 @@ import { Link } from "react-router-dom"
 
 function Inscription() {
 
+    const notifyS = () => toast.success('Succès')
+    const notifyE = () => toast.error('Echec')
+
     const [field1, setField1] = useState('')
     const [field2, setField2] = useState('')
     const [field3, setField3] = useState('')
@@ -41,10 +44,12 @@ function Inscription() {
                     setField3('')
                     setField4('')
                     setField5('')
+                    notifyS()
                 } 
                 else {
                     setError('failed')
                     setSuccess(false)
+                    notifyE()
                 }
             }
         } catch (error) {

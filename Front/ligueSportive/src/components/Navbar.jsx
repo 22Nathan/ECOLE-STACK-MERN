@@ -22,15 +22,21 @@ const Navbar = () => {
                         </svg>
                     </Link>
 
-                    <nav id="nav" className="p-2 text-gray-300 font-normal hidden lg:flex justify-between absolute w-[600px] left-[calc(50%-300px)] gap-1 select-none text-sm">
+                    <nav id="nav" className="p-2 text-gray-300 font-normal hidden lg:flex justify-center absolute w-[900px] left-[calc(50%-450px)] gap-1 select-none text-sm">
                         <Link to="/connexion" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Connexion</Link>
                         <Link to="/produits" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Produits</Link>
                         <Link to="/inscription" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Inscription</Link>
-                        <Link to="/gestionprod" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Gestion des produits</Link>
+                        {
+                            ( infoConnexion.admin && infoConnexion.admin.toString() === "true" ) &&
+                            <>
+                                <Link to="/gestionprod" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Gestion des produits</Link>
+                                <Link to="/gestionpers" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Gestion des personnes</Link>
+                            </>
+                        }
                     </nav>
 
                     { 
-                        ( infoConnexion.connected ) ? ( 
+                        ( infoConnexion.connected && infoConnexion.nom ) ? ( 
                             <div>
                                 <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -38,6 +44,7 @@ const Navbar = () => {
                                 </span>
 
                                 <div className="absolute top-full right-0 p-3 rounded-lg border border-[hsla(0,0%,100%,.1)] bg-[rgba(5,5,5,.5)] backdrop-blur-md">
+                                    <p>Admin : <span className="capitalize">{infoConnexion.admin.toString() || False}</span></p>
                                     <p>{infoConnexion.mail}</p>
                                     <p>{infoConnexion.nom} {infoConnexion.prenom}</p>
                                 </div>

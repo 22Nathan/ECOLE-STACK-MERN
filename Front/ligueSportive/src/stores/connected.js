@@ -12,14 +12,16 @@ export const { useStore , store } = createStore({
     prenom    : localStorage.getItem( "prenom"    ),
     mail      : localStorage.getItem( "mail"      ),
     panier    : localStorage.getItem( "panier"    ),
+    admin     : localStorage.getItem( "admin"     ),
     connected : localStorage.getItem( "connected" )  
 })
 
 store.set({
-    nom       : localStorage.getItem( "nom"       ) != "null" ? localStorage.getItem( "nom"       ) : null ,
-    prenom    : localStorage.getItem( "prenom"    ) != "null" ? localStorage.getItem( "prenom"    ) : null ,
-    mail      : localStorage.getItem( "mail"      ) != "null" ? localStorage.getItem( "mail"      ) : null ,
-    panier    : localStorage.getItem( "panier"    ) != "null" ? localStorage.getItem( "panier"    ) : {}   ,
+    nom       : localStorage.getItem( "nom"       ) != "null" ? localStorage.getItem( "nom"       ) : null  ,
+    prenom    : localStorage.getItem( "prenom"    ) != "null" ? localStorage.getItem( "prenom"    ) : null  ,
+    mail      : localStorage.getItem( "mail"      ) != "null" ? localStorage.getItem( "mail"      ) : null  ,
+    panier    : localStorage.getItem( "panier"    ) != "null" ? localStorage.getItem( "panier"    ) : {}    ,
+    admin     : localStorage.getItem( "admin"     ) != "null" ? localStorage.getItem( "admin"     ) : false ,
     connected : localStorage.getItem( "connected" ) != "null" ? localStorage.getItem( "connected" ) : false 
 })
 
@@ -28,6 +30,7 @@ store.subscribe( value => {
     localStorage.setItem( "prenom"    , value.prenom    != "null" ? value.prenom    : null  ), 
     localStorage.setItem( "mail"      , value.mail      != "null" ? value.mail      : null  ),
     localStorage.setItem( "panier"    , value.panier    != "null" ? value.panier    : {}    ),
+    localStorage.setItem( "admin"     , value.admin     != "null" ? value.admin     : false ),
     localStorage.setItem( "connected" , value.connected != "null" ? value.connected : false ) 
 })
 
