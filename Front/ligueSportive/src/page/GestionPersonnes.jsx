@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import { useStore } from 'react-svelte-store'
 import { store } from '../stores/connected'
 
-import Ajout from '../components/produits/Ajout'
-import Suppression from '../components/produits/Suppression'
-import Modifier from '../components/produits/Modifier'
+import Ajout from '../components/personnes/Ajout'
+import Suppression from '../components/personnes/Suppression'
+import Modifier from '../components/personnes/Modifier'
 
 
-function GestionProduits() {
+function GestionPersonnes() {
 
     const [infoConnexion, setInfoConnexion] = useStore(store)
 
@@ -24,7 +24,7 @@ function GestionProduits() {
 
     return (
         <div>
-            <h1 className="py-20 text-5xl text-center font-bold">Gestion des produits</h1>
+            <h1 className="py-20 text-5xl text-center font-bold">Gestion des personnes</h1>
             <div className=' w-1/2 mx-auto flex flex-col gap-10'>
                 
                 <Ajout/>
@@ -37,4 +37,4 @@ function GestionProduits() {
 
 }
 
-export default GestionProduits
+export default GestionPersonnes

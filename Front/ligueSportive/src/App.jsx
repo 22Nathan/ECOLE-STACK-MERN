@@ -12,6 +12,7 @@ import Connexion from './page/Connexion'
 import Produits from './page/Produits'
 import Inscription from './page/Inscription'
 import GestionProduits from './page/GestionProduits'
+import GestionPersonnes from './page/GestionPersonnes'
 
 import { Gradient } from './assets/Gradient'
 
@@ -41,6 +42,7 @@ function App() {
           <Route path='/produits' element={ <Produits/> }/>
           <Route path='/inscription' element={ <Inscription/> }/>
           <Route path='/gestionprod' element={ <GestionProduits/> }/>
+          <Route path='/gestionpers' element={ <GestionPersonnes/> }/>
         </Routes>
       </div>
 
