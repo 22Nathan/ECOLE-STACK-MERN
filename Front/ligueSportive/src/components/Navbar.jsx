@@ -1,14 +1,29 @@
 
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 const Navbar = () => {
 
+    const [isConnected, setIsConnected] = useState(false)
+
+    useEffect(() => {
+
+        localStorage.getItem('mail') && localStorage.getItem('mdp') ? setIsConnected(true) : setIsConnected(false)
+
+        const handleStorageChange = () => { 
+            localStorage.getItem('mail') && localStorage.getItem('mdp') ? setIsConnected(true) : setIsConnected(false)
+        }
+
+        window.addEventListener('storage', handleStorageChange)
+        return () => { window.removeEventListener('storage', handleStorageChange) }
+
+    }, [])
+
     return (
         <>
             <nav className="fixed border-b transition-colors duration-300 py-3 top-0 inset-x-0 z-50 border-[hsla(0,0%,100%,.1)] bg-[rgba(5,5,5,.5)] backdrop-blur-md">
-                <div className="container flex justify-between items-center px-4 mx-auto">
+                <div className="container relative flex justify-between items-center px-4 mx-auto">
 
                     <Link to="/" className="p-2 group text-gray-300"> 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -18,7 +33,21 @@ const Navbar = () => {
 
                     <nav id="nav" className="p-2 text-gray-300 font-normal hidden lg:flex justify-between absolute w-[600px] left-[calc(50%-300px)] gap-1 select-none text-sm">
                         <Link to="/connexion" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Connexion</Link>
+                        <Link to="/inscription" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Inscription</Link>
                     </nav>
+
+                    { isConnected && 
+                        <span class="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                    }
+                    { !isConnected &&
+                        <span class="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                        </span>
+                    }
 
                 </div>
             </nav>

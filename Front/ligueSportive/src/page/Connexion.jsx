@@ -2,7 +2,7 @@
 
 
 import React, { useEffect , useState } from 'react'
-import { Routes , Route } from 'react-router-dom'
+import { Link } from "react-router-dom"
 
 
 function Connexion() {
@@ -13,21 +13,33 @@ function Connexion() {
     const [error, setError]     = useState(null)
     const [success, setSuccess] = useState(false)
 
+    function initLocalStorage() {
+        if( field1 && field2 ){
+            // Save data to localStorage
+            localStorage.setItem('mail', field1)
+            localStorage.setItem('mdp', field2)
+        }
+    }
+
     const handleConnexion = async (event) => {
         event.preventDefault()
     
         try {
+            if( field1 == "" || field2 == "" ){ return }
             const response = await fetch(`http://localhost:3000/personnes/${field1}/${field2}`, {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify({ email:field1 , password:field2 })    
+                headers: { 'Content-Type': 'application/json' },  
             })
     
             if (response.ok) {
                 setSuccess(true)
                 setError(null)
+
+                initLocalStorage()
+
                 setField1('')
                 setField2('')
+
             } 
             else {
                 setError('failed')
@@ -47,8 +59,8 @@ function Connexion() {
             <div className=' w-1/2 mx-auto flex flex-col gap-10'>
                 <h1 className='text-5xl font-bold'> Connection </h1>
                 <form onSubmit={handleConnexion} className='flex flex-col gap-4'>
-                    <input type="email" value={field1} onChange={(e) => setField1(e.target.value)} placeholder='Email' />
-                    <input type="text"  value={field2} onChange={(e) => setField2(e.target.value)} placeholder='Mot de passe' />
+                    <input type="email" value={field1} onChange={(e) => setField1(e.target.value)} required placeholder='Email' />
+                    <input type="text"  value={field2} onChange={(e) => setField2(e.target.value)} required placeholder='Mot de passe' />
                     <button type="submit" className='button button-primary'>
                         Valider
                     </button>
@@ -65,6 +77,7 @@ function Connexion() {
                         Connecté avec succès
                     </p>
                 }
+                <Link to="/inscription" className='button'> Pas de compte ? S'inscrire </Link>
             </div>
 
         </div>
