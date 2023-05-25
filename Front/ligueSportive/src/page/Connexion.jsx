@@ -11,7 +11,7 @@ import { store } from '../stores/connected'
 
 function Connexion() {
 
-    const [connected, setConnected] = useStore(store)
+    const [infoConnexion, setInfoConnexion] = useStore(store)
 
     const notifyS = () => toast.success('Connecté avec succès')
     const notifyE = () => toast.error('Impossible de se connecter')
@@ -31,13 +31,19 @@ function Connexion() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },  
             })
+            const res = await response.json()
     
             if (response.ok) {
                 setSuccess(true)
                 setError(null)
+                setInfoConnexion({ 
+                    nom: res.nom,
+                    prenom: res.prenom,
+                    mail: res.mail,
+                    connected: true
+                })
                 setField1('')
                 setField2('')
-                setConnected( true )
                 notifyS()
             } 
             else {

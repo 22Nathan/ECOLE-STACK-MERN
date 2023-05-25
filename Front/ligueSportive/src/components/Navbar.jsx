@@ -9,7 +9,7 @@ import { store } from '../stores/connected'
 
 const Navbar = () => {
 
-    const [connected, setConnected] = useStore(store)
+    const [infoConnexion, setInfoConnexion] = useStore(store)
 
     return (
         <>
@@ -28,17 +28,27 @@ const Navbar = () => {
                         <Link to="/inscription" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Inscription</Link>
                     </nav>
 
-                    { connected && 
-                        <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                        </span>
-                    }
-                    { !connected &&
-                        <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                        </span>
+                    { 
+                        ( infoConnexion.connected ) ? ( 
+                            <div>
+                                <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                </span>
+
+                                <div className="absolute top-full right-0 p-3 rounded-lg border border-[hsla(0,0%,100%,.1)] bg-[rgba(5,5,5,.5)] backdrop-blur-md">
+                                    <p>{infoConnexion.mail}</p>
+                                    <p>{infoConnexion.nom} {infoConnexion.prenom}</p>
+                                </div>
+                            </div>
+                        )
+                        :
+                        ( 
+                            <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                            </span>
+                        )
                     }
 
                 </div>
