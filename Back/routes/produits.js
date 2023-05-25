@@ -2,8 +2,8 @@
 
 const express = require('express')
 const router = express.Router()
-const Produit = require('../models/produits')
-
+const Produit = require('../models/produit')
+const mongooseConnection = require('../server')
 
 
 
@@ -48,8 +48,10 @@ router.get('/:id', getProduit, (req, res) => {
 // CREATE
 router.post('/', async (req, res) => {
 
+    let length = await countCollectionLength('Produit')
+
     const produit = new Produit({
-        id: req.body.id,
+        id: (length+1) || 667,
         title: req.body.title,
         price: req.body.price,
         description: req.body.description,
@@ -94,6 +96,9 @@ router.delete('/:id', getProduit, async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
-  
+
+async function countCollectionLength(collection) {
+    return await mongooseConnection.model(collection).countDocuments({}) || 0
+}
   
 module.exports = router

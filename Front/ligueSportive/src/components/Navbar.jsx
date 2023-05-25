@@ -35,16 +35,17 @@ const Navbar = () => {
                         <Link to="/connexion" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Connexion</Link>
                         <Link to="/produits" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Produits</Link>
                         <Link to="/inscription" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Inscription</Link>
+                        <Link to="/gestionprod" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Gestion des produits</Link>
                     </nav>
 
                     { isConnected && 
-                        <span class="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                        <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                         </span>
                     }
                     { !isConnected &&
-                        <span class="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                        <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                         </span>

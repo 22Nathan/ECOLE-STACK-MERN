@@ -19,7 +19,7 @@ const Hero = () => {
     }, [])
 
     const [elementDisplay, setElementDisplay] = useState('hidden');
-    const handleClick = () => {
+    const handleClick = (id) => {
         setElementDisplay('block')
       };
 
@@ -46,7 +46,7 @@ const Hero = () => {
                                     <span className='text-xl font-medium'>Description :</span><br />
                                     <span className='pl-1'>{item.description}</span>
                                 </p>
-                                <button onClick={() => handleClick()} type="submit" className='button button-primary'>
+                                <button onClick={() => handleClick(item.id)} type="submit" className='button button-primary'>
                                     Voir détails
                                 </button>
                             </div>
