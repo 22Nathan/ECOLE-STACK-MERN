@@ -3,22 +3,13 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
+import { useStore } from 'react-svelte-store'
+import { store } from '../stores/connected'
+
+
 const Navbar = () => {
 
-    const [isConnected, setIsConnected] = useState(false)
-
-    useEffect(() => {
-
-        localStorage.getItem('mail') && localStorage.getItem('mdp') ? setIsConnected(true) : setIsConnected(false)
-
-        const handleStorageChange = () => { 
-            localStorage.getItem('mail') && localStorage.getItem('mdp') ? setIsConnected(true) : setIsConnected(false)
-        }
-
-        window.addEventListener('storage', handleStorageChange)
-        return () => { window.removeEventListener('storage', handleStorageChange) }
-
-    }, [])
+    const [infoConnexion, setInfoConnexion] = useStore(store)
 
     return (
         <>
@@ -38,17 +29,27 @@ const Navbar = () => {
                         <Link to="/gestionprod" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Gestion des produits</Link>
                     </nav>
 
-                    { isConnected && 
-                        <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                        </span>
-                    }
-                    { !isConnected &&
-                        <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                        </span>
+                    { 
+                        ( infoConnexion.connected ) ? ( 
+                            <div>
+                                <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                </span>
+
+                                <div className="absolute top-full right-0 p-3 rounded-lg border border-[hsla(0,0%,100%,.1)] bg-[rgba(5,5,5,.5)] backdrop-blur-md">
+                                    <p>{infoConnexion.mail}</p>
+                                    <p>{infoConnexion.nom} {infoConnexion.prenom}</p>
+                                </div>
+                            </div>
+                        )
+                        :
+                        ( 
+                            <span className="flex absolute h-3 w-3 right-0 -mt-1 -mr-1 top-[calc(50%-6px)]">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                            </span>
+                        )
                     }
 
                 </div>

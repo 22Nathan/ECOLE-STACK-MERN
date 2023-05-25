@@ -3,6 +3,7 @@
 
 import React, { useEffect } from 'react'
 import { Routes , Route } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 
 import Navbar from './components/Navbar'
 
@@ -23,6 +24,11 @@ function App() {
 
   return (
     <div>
+
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
 
       <canvas id="gradient-canvas" className="fixed top-0 left-0 -z-10" data-transition-in />
 
