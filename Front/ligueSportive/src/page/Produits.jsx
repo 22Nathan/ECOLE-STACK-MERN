@@ -1,6 +1,15 @@
+
+
 import React, { useEffect, useState } from 'react'
 
+import { useStore } from 'react-svelte-store'
+import { store } from '../stores/connected'
+
+
+
 const Hero = () => {
+
+    const [connected, setConnected] = useStore(store)
 
     const [data, setData] = useState(null)
 
@@ -18,37 +27,48 @@ const Hero = () => {
         fetchData()
     }, [])
 
-    const [elementDisplay, setElementDisplay] = useState('hidden');
-    const handleClick = () => {
-        setElementDisplay('block')
-      };
+    const [openItems, setOpenItems] = useState([])
+
+    const handleClick = (item) => {
+      if (openItems.includes(item)) { setOpenItems(openItems.filter((openItem) => openItem !== item)) } 
+      else { setOpenItems([...openItems, item]) }
+    }
 
     return (
         <div className=''>
             <h1 className='text-5xl font-bold'>Liste des produits disponibles</h1>
             {data ? (
                 <div className='flex flex-col gap-20 py-20'>
-                    <div className='flex flex-col gap-1'>
+                    <div className='flex flex-wrap gap-5 justify-start'>
                         {data.map((item) => (
-                            <div key={item.id} className='relative flex flex-col gap-2 p-3 border border-[hsla(0,0%,100%,.1)] backdrop-blur-sm rounded-lg bg-[rgba(5,5,5,.5)]'>
+                            <div key={item.id} className='relative h-fit w-full lg:w-5/12 flex flex-col gap-2 p-3 border border-[hsla(0,0%,100%,.1)] backdrop-blur-sm rounded-lg bg-[rgba(5,5,5,.5)]'>
                                 <p>
-                                    <span className='pl-1'>{item.title}</span>
+                                    <span className=''>{item.title}</span>
                                 </p>
-                                <p>
-                                    <span className='text-xl font-medium'>Prix :</span><br />
-                                    <span className='pl-1'>{item.price}</span>
+                                <p className='flex justify-between items-center'>
+                                    <span className='text-xl font-medium'>Prix :</span>
+                                    <span className='p-1 font-semibold'>{item.price} $</span>
                                 </p>
-                                <p>
-                                    <span className='text-xl font-medium'>Quantité :</span><br />
-                                    <span className='pl-1'>{item.quantity}</span>
+                                <p className='flex justify-between items-center'>
+                                    <span className='text-xl font-medium'>Quantité :</span>
+                                    <span className='p-1 font-semibold'>{item.quantity}</span>
                                 </p>
-                                <p className='hidden' style={{ display: elementDisplay }}>
+                                <p className='hidden' style={{ display: openItems.includes(item) ? 'block' : 'none' }}>
                                     <span className='text-xl font-medium'>Description :</span><br />
                                     <span className='pl-1'>{item.description}</span>
                                 </p>
-                                <button onClick={() => handleClick()} type="submit" className='button button-primary'>
-                                    Voir détails
-                                </button>
+                                <div className='flex gap-2'>
+                                    <button onClick={() => handleClick(item)} type="button" className='button button-primary flex-1'>
+                                        {openItems.includes(item) ? 'Cacher détails' : 'Voir détails'}
+                                    </button>
+                                    { connected && 
+                                        <button type="button" className='button button-primary flex-none'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                            </svg>
+                                        </button>
+                                    }
+                                </div>
                             </div>
                         ))}
                     </div>

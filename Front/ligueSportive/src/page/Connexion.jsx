@@ -3,23 +3,24 @@
 
 import React, { useEffect , useState } from 'react'
 import { Link } from "react-router-dom"
+import toast, { Toaster } from 'react-hot-toast'
+
+import { useStore } from 'react-svelte-store'
+import { store } from '../stores/connected'
 
 
 function Connexion() {
+
+    const [connected, setConnected] = useStore(store)
+
+    const notifyS = () => toast.success('Connecté avec succès')
+    const notifyE = () => toast.error('Impossible de se connecter')
 
     const [field1, setField1] = useState('')
     const [field2, setField2] = useState('')
 
     const [error, setError]     = useState(null)
     const [success, setSuccess] = useState(false)
-
-    function initLocalStorage() {
-        if( field1 && field2 ){
-            // Save data to localStorage
-            localStorage.setItem('mail', field1)
-            localStorage.setItem('mdp', field2)
-        }
-    }
 
     const handleConnexion = async (event) => {
         event.preventDefault()
@@ -34,16 +35,15 @@ function Connexion() {
             if (response.ok) {
                 setSuccess(true)
                 setError(null)
-
-                initLocalStorage()
-
                 setField1('')
                 setField2('')
-
+                setConnected( true )
+                notifyS()
             } 
             else {
                 setError('failed')
                 setSuccess(false)
+                notifyE()
             }
 
         } catch (error) {
