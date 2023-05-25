@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import Accueil from './page/Accueil'
 import Connexion from './page/Connexion'
 import Produits from './page/Produits'
+import Inscription from './page/Inscription'
 
 import { Gradient } from './assets/Gradient'
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/' element={ <Accueil/> }/>
           <Route path='/connexion' element={ <Connexion/> }/>
           <Route path='/produits' element={ <Produits/> }/>
+          <Route path='/inscription' element={ <Inscription/> }/>
         </Routes>
       </div>
 

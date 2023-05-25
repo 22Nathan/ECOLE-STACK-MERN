@@ -3,7 +3,8 @@
 
 const express = require('express')
 const router = express.Router()
-const Personne = require('../models/personnes')
+const Personne = require('../models/personne')
+const mongooseConnection = require('../server')
 
 // <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 // MIDDLEWARE GET BY ID
@@ -66,13 +67,16 @@ router.get('/:mail/:mdp', getPersonneMailPwd, (req, res) => {
 // CREATE
 router.post('/', async (req, res) => {
 
+    let length = await countCollectionLength('Personne')
+
     const personne = new Personne({
-        id: req.body.id,
+        id: (length+1) || 667,
         nom: req.body.nom,
         prenom: req.body.prenom,
         telephone: req.body.telephone,
         mail: req.body.mail,
         mdp: req.body.mdp,
+        admin: 0
     })
 
     try {
@@ -113,6 +117,15 @@ router.delete('/:id', getPersonne, async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
+
+
+
+async function countCollectionLength(collection) {
+    return await mongooseConnection.model(collection).countDocuments({}) || 0
+}
+
+
 
 
 module.exports = router

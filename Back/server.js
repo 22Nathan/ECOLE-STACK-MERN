@@ -18,6 +18,8 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology:
     console.error('Error connecting to MongoDB:', error)
   })
 
+module.exports = mongoose.connection
+
 const produitsRouter = require('./routes/produits')
 const personnesRouter = require('./routes/personnes')
 app.use('/produits' , produitsRouter)
