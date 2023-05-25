@@ -18,6 +18,7 @@ const Navbar = () => {
 
                     <nav id="nav" className="p-2 text-gray-300 font-normal hidden lg:flex justify-between absolute w-[600px] left-[calc(50%-300px)] gap-1 select-none text-sm">
                         <Link to="/connexion" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Connexion</Link>
+                        <Link to="/produits" className="link p-2 uppercase duration-300 mix-blend-difference hover:text-awa-2">Produits</Link>
                     </nav>
 
                 </div>
