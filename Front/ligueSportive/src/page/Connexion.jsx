@@ -16,8 +16,8 @@ function Connexion() {
     const notifyS = () => toast.success('Connecté avec succès')
     const notifyE = () => toast.error('Impossible de se connecter')
 
-    const [field1, setField1] = useState('')
-    const [field2, setField2] = useState('')
+    const [field1, setField1] = useState('test@test.com')
+    const [field2, setField2] = useState('test')
 
     const [error, setError]     = useState(null)
     const [success, setSuccess] = useState(false)

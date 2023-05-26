@@ -12,7 +12,9 @@ const Hero = () => {
     const [infoProduit, setInfoProduit] = useStore(store)
 
     const [data, setData] = useState(null)
+    const [openItems, setOpenItems] = useState([])
 
+    // recup
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,8 +28,6 @@ const Hero = () => {
         fetchData()
     }, [])
 
-    const [openItems, setOpenItems] = useState([])
-
     const handleClick = (item) => {
       if (openItems.includes(item)) { setOpenItems(openItems.filter((openItem) => openItem !== item)) } 
       else { setOpenItems([...openItems, item]) }
@@ -37,36 +37,26 @@ const Hero = () => {
         const response = await fetch(`http://localhost:3000/produits/${id}`)
         const res = await response.json()
 
-        const r = {
-            title: res.title,
-        }
-        const p = {
-            title: res.title,
-        }
-
-        // Concaténer les valeurs des clés de dict2 à dict1
-        const concatenatedDict = Object.assign({}, r);
-
-        for (let key in p) {
-        if (r.hasOwnProperty(key)) {
-            concatenatedDict[key] += ' ' + p[key];
-        } else {
-            concatenatedDict[key] = p[key];
-        }
+        if( !infoProduit.panier ) { 
+            store.update( (v) => {
+                return {
+                    ...v,
+                    panier: []
+                }
+            } )
         }
 
-        console.log(concatenatedDict);
-
-        // if(response.ok){
-            setInfoProduit({
-                // panier: {
-                //     title: res.title,
-                //     price: res.price,
-                //     description: res.description,
-                // }
-                panier: concatenatedDict
-            })
-        // }
+        store.update( (v) => {
+            return {
+                ...v,
+                panier: Array.isArray(v.panier) ? [...v.panier] : [],
+                panier: [
+                    ...v.panier,
+                    {title: res.title, price: res.price, id: res.id, made: res.made, quantity:res.quantity, description: res.description},
+                    // ...v.panier + JSON.stringify({title: res.title, price: res.price}),
+                ]
+            }
+        } )
     }
 
     return (
@@ -97,7 +87,7 @@ const Hero = () => {
                                         {openItems.includes(item) ? 'Cacher détails' : 'Voir détails'}
                                     </button>
                                     { infoProduit && 
-                                        <button onClick={() => getInformationProduit(item.id)} type="button" className='button button-primary flex-none'>
+                                        <button disabled={ item.quantity==0 } onClick={() => getInformationProduit(item.id)} type="button" className={ item.quantity>0 ? 'button button-primary flex-none' : 'button button-primary flex-none pointer-events-none opacity-50' }>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                             </svg>

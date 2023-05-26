@@ -80,7 +80,7 @@ router.put('/:id', getProduit, async (req, res) => {
 
     try {
         const updatedProduit = await res.produit.save()
-        res.json(updatedProduit)
+        res.status(200).json(updatedProduit)
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

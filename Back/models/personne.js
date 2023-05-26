@@ -10,6 +10,7 @@ const personneSchema = new mongoose.Schema({
     mail: { type: String },
     mdp: { type: String },
     admin: { type: Boolean },
+    panier: { type: Object }
 })
 
 const Personne = mongoose.model('Personne', personneSchema, 'Personne')

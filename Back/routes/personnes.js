@@ -76,7 +76,8 @@ router.post('/', async (req, res) => {
         telephone: req.body.telephone,
         mail: req.body.mail,
         mdp: req.body.mdp,
-        admin: 0
+        admin: 0,
+        panier: {},
     })
 
     try {

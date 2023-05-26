@@ -46,8 +46,10 @@ const Navbar = () => {
                                 <div className="absolute top-full right-0 p-3 rounded-lg border border-[hsla(0,0%,100%,.1)] bg-[rgba(5,5,5,.5)] backdrop-blur-md">
                                     <p>Admin : <span className="capitalize">{infoConnexion.admin.toString() || False}</span></p>
                                     <p>{infoConnexion.mail}</p>
-                                    <p>{infoConnexion.nom} {infoConnexion.prenom}</p>
+                                    <p className="pb-1">{infoConnexion.nom} {infoConnexion.prenom}</p>
+                                    <Link to="/panier" className="button button-primary !pt-0 !pb-[2px]">Panier</Link>
                                 </div>
+
                             </div>
                         )
                         :
