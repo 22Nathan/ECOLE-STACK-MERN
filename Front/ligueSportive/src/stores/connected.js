@@ -31,8 +31,6 @@ store.subscribe( value => {
     // localStorage.setItem( "panier"    , value.panier    != "null" ? ( typeof value.panier !== "string" ? JSON.stringify(value.panier) : value.panier )   : [] ),
     localStorage.setItem( "admin"     , value.admin     != "null" ? value.admin                    : false ),
     localStorage.setItem( "connected" , value.connected != "null" ? value.connected                : false ) 
-
-
     console.log(store.value)
 })
 
